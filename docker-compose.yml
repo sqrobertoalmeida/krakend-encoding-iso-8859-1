@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  static-api:
+    container_name: static-api
+    networks:
+      - backend
+    build:
+      context: .
+    image: static-api
+
+  api-gateway:
+    container_name: encoding-iso-8859-1
+    networks:
+      - backend
+    image: devopsfaith/krakend:1.1.1-alpine
+    volumes:
+      - ./krakend:/etc/krakend
+    ports:
+      - '8085:8080'
+
+networks:
+  backend:
+    name: encoding-iso-8859-1-net
+    driver: bridge
+    internal: false
+    driver_opts:
+      com.docker.network.enable_ipv6: 'true'

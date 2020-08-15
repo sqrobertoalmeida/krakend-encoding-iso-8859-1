@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "name": "encoding-iso-8859-1",
+  "port": 8080,
+  "cache_ttl": "3600s",
+  "timeout": "3s",
+  "host": [
+    "http://static-api"
+  ],
+  "extra_config": {
+    "github_com/devopsfaith/krakend-cors": {
+      "allow_origins": ["*"],
+      "allow_methods": ["POST", "GET", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      "allow_headers": ["Origin", "Authorization", "Content-Type"],
+      "expose_headers": ["Content-Length"],
+      "max_age": "12h"
+    }
+  },
+  "endpoints": [
+    {
+      "endpoint": "/api/xml-utf",
+      "method": "GET",
+      "output_encoding": "json",
+      "timeout": "10s",
+      "backend": [
+        {
+          "url_pattern": "/xml-encoding-utf-8.xml",
+          "sd": "static",
+          "encoding": "xml",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/xml-iso",
+      "method": "GET",
+      "output_encoding": "json",
+      "timeout": "10s",
+      "backend": [
+        {
+          "url_pattern": "/xml-encoding-iso-8859-1.xml",
+          "sd": "static",
+          "encoding": "xml",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}
